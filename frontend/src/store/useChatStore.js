@@ -26,7 +26,7 @@ export const useChatStore = create((set, get) => ({
             const res = await axiosInstance.get("/messages/contacts");
             set({ allContacts: res.data });
         } catch (error) {
-            toast.error("Error fetching contacts:", error);
+            toast.error(error?.response?.data?.message || "Error fetching contacts");
         } finally {
             set({ isUsersLoading: false });
         }
@@ -36,9 +36,21 @@ export const useChatStore = create((set, get) => ({
             const res = await axiosInstance.get("/messages/chats");
             set({ chats: res.data });
         } catch (error) {
-            toast.error("Error fetching chats:", error);
+            toast.error(error?.response?.data?.message || "Error fetching chats");
         } finally {
             set({ isUsersLoading: false });
+        }
+    },
+
+    getMessagesByUserId: async (userId) => {
+        set({ isMessagesLoading: true });
+        try {
+            const res = await axiosInstance.get(`/messages/${userId}`);
+            set({ messages: res.data });
+        } catch (error) {
+            toast.error(error?.response?.data?.message || "Error fetching messages");
+        } finally {
+            set({ isMessagesLoading: false });
         }
     },
 }));
