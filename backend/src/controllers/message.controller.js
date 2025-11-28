@@ -37,8 +37,8 @@ export const sendMessage = async (req, res) => {
         const { text, image } = req.body
         const { id: receiverId } = req.params
         const senderId = req.user._id;
-
-        if (!text || !image)
+        
+        if (!text && !image)
             return res.status(400).json({ message: "Text or image is required." })
 
         if (senderId.equals(receiverId))
@@ -51,7 +51,7 @@ export const sendMessage = async (req, res) => {
         
         let imageUrl;
 
-        if (imageUrl) {
+        if (image) {
             const uploadResponse = await cloudinary.uploader.upload(image);
             imageUrl = uploadResponse.secure_url;
         }
