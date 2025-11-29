@@ -14,8 +14,6 @@ const App = () => {
     checkAuth();
   }, [checkAuth])
 
-  console.log({ authUser, isCheckingAuth })
-
   if (isCheckingAuth) return <PageLoader />
 
   return (

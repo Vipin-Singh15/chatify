@@ -6,8 +6,7 @@ import path from 'path'
 import { connectDB } from './lib/db.js'
 import { ENV } from './lib/env.js'
 import cors from 'cors'
-
-const app = express();
+import { app, server } from './lib/socket.js'
 const __dirname = path.resolve();
 
 const PORT = ENV.PORT || 3000;
@@ -31,7 +30,6 @@ if (ENV.NODE_ENV == "production") {
     })
 }
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`)
+server.listen(PORT, () => {
     connectDB();
 })

@@ -8,7 +8,7 @@ export const getAllContacts = async (req, res) => {
         const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password")
         res.status(200).json(filteredUsers)
     } catch (error) {
-        console.log("Error in getAllContacts:", error)
+        console.error("Error in getAllContacts:", error.message)
         res.status(500).json({ Message: "Server error" })
     }
 }
@@ -27,7 +27,7 @@ export const getMessagesByUserId = async (req, res) => {
 
         res.status(200).json(messages)
     } catch (error) {
-        console.log("Error in getMessages controller: ", error.message);
+        console.error("Error in getMessages controller: ", error.message);
         res.status(500).json({ message: "Internal Server error" })
     }
 }
@@ -68,7 +68,7 @@ export const sendMessage = async (req, res) => {
         res.status(201).json(newMessage)
 
     } catch (error) {
-        console.log("Error in getMessages controller: ", error.message);
+        console.error("Error in getMessages controller: ", error.message);
         res.status(500).json({ message: "Internal Server error" })
     }
 }
